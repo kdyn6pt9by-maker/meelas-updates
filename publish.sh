@@ -16,7 +16,7 @@ for P in Launcher Check-Android BuSita-Android; do
   (cd "$ROOT/$P" && ./gradlew -q assembleRelease)
   F="$OUT/${NAMES[$P]}.apk"; cp "$ROOT/$P/app/build/outputs/apk/release/app-release.apk" "$F"
   B=$("$AAPT" dump badging "$F" | head -1)
-  PKG=$(echo "$B" | sed -E "s/.*name='([^']+)'.*/\1/")
+  PKG=$(echo "$B" | sed -E "s/^package: name='([^']+)'.*/\1/")
   VC=$(echo "$B" | sed -E "s/.*versionCode='([^']+)'.*/\1/")
   VN=$(echo "$B" | sed -E "s/.*versionName='([^']+)'.*/\1/")
   SHA=$(shasum -a 256 "$F" | cut -d' ' -f1)
